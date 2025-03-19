@@ -23,9 +23,14 @@ section {
   margin-inline: auto;
 }
 
-.surface-primary {
+.surface-primary,
+.surface-secondary {
   background: $clr-primary-400;
   color: white;
+  .btn {
+    background: white;
+    color: black;
+  }
 }
 
 .surface-secondary {
@@ -36,6 +41,10 @@ section {
 .surface-accent {
   background: $clr-accent-400;
   color: black;
+  .btn {
+    background: black;
+    color:white;
+  }
 }
 
 .btn {
@@ -45,10 +54,23 @@ section {
   border: 0;
   text-decoration: none;
   text-transform: uppercase;
-  // your code here
+  &:hover,
+  &:focus {
+    background: inherit;
+    color: inherit;
+    outline: currentColor 2px solid;
+  }
 }
 
 .text-subdued {
   font-size: 1rem;
-  // your code here
+  .surface-primary & {
+    opacity: 0.8;
+  }
+  .surface-secondary & {
+    opacity: 0.7;
+  }
+  .surface-accent & {
+    opacity: 0.6;
+  }
 }

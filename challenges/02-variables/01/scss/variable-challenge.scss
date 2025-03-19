@@ -1,32 +1,150 @@
+$clr-primary: #000000;
+$clr-secondary: #ffffff; 
+$clr-accent: yellowgreen;
+
+// Background with gradient effect
 * {
   box-sizing: border-box;
   margin: 0;
+  background: linear-gradient(135deg, $clr-primary 30%, darken($clr-primary, 10%));
 }
 
+// Animated background
 body {
   font-size: 1.75rem;
   font-family: system-ui, sans-serif;
   line-height: 1.6;
-
-  /* this is being used to center the content on the screen */
+  color: $clr-secondary;
   display: grid;
   height: 100vh;
   place-items: center;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, $clr-primary 30%, color.adjust($clr-primary, $lightness: -10%));
 }
 
+// Background animation container
+.bg-animation {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+// Glowing dots
+.dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: $clr-accent;
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: float 5s infinite ease-in-out alternate;
+}
+
+// Random dot positions (SCSS loop for multiple dots)
+@for $i from 1 through 15 {
+  .dot:nth-child(#{$i}) {
+    top: math.random(100) * 1%;
+    left: math.random(100) * 1%;
+    animation-duration: math.random(8) + 3s;
+    animation-delay: math.random(5) + 1s;
+  }
+}
+
+// Floating animation for the dots
+@keyframes float {
+  0% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(math.random(30) * 1px) translateX(math.random(30) * 1px);
+    opacity: 1;
+  }
+}
+
+// Card styles with hover effect
 .card {
   display: grid;
   gap: 0.75em;
   width: min(90%, 60rem);
   padding: 2em;
+  border-radius: 10px;
+  background-color: rgba($clr-primary, 0.85);
+  box-shadow: 0 0 15px rgba($clr-secondary, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba($clr-accent, 0.9);
+  }
+
+  &__title {
+    color: $clr-accent;
+    text-shadow: 2px 2px 10px rgba($clr-accent, 0.8);
+  }
+
+  &__text {
+    opacity: 0.9;
+  }
 }
 
+// Button styles with glow effect
 .btn {
   display: inline-block;
   padding: 0.5em 1.5em;
   text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+
+  &--primary, &--outline {
+    border: solid 2px $clr-accent;
+
+    &:hover,
+    &:focus {
+      background-color: $clr-secondary;
+      color: $clr-accent;
+      box-shadow: 0 0 15px rgba($clr-accent, 0.8);
+      transform: scale(1.05);
+    }
+  }
+
+  &--primary {
+    color: $clr-secondary;
+    background-color: $clr-accent;
+  }
+
+  &--outline {
+    color: $clr-accent;
+    background-color: transparent;
+  }
 }
 
+// Button glow animation
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba($clr-accent, 0.4) 10%, transparent 60%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.btn:hover::before {
+  opacity: 1;
+}
+
+// Flexbox button container
 .flex-group {
   display: flex;
   gap: 1rem;
