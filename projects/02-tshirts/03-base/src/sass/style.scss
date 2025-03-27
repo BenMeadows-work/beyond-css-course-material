@@ -30,7 +30,7 @@ $size-36: 3rem;
 
 // Mixins
 
-@mixin interative-scale($color, $bg, $scale: 1.05) {
+@mixin interactive-scale($color, $bg, $scale: 1.05) {
   transform: scale(1);
   transition: transform 350ms ease;
 
@@ -41,6 +41,7 @@ $size-36: 3rem;
     background-color: $bg;
   }
 }
+
 
 // reset
 *,
@@ -116,4 +117,63 @@ body {
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+.card {
+  $parent : &;
+  border-radius: 2rem;
+  overflow: hidden;
+  background-color: $neutral-100;
+  @extend %shadow;
+
+  &[data-type="product"] { 
+    h2{
+      font-size: $fs-600;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    #{$parent}__content {
+      padding: $size-32 $size-16 $size-16;
+      position: relative;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: $size-8;
+    }
+
+    .button{
+      position: absolute;
+      right: $size-16;
+      top: 0;
+      translate : 0 -50%;
+    }
+   }
+
+   &[data-type="link-with-image"] {
+    text-decoration: none;
+    color: $red-500;
+    #{$parent} {
+      &__content {
+        padding: $size-16 $size-12;
+      }
+    }
+    img {
+      height: 8.75rem;
+      width: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+  }
+}
+
+.button {
+  display: inline-block;
+  border: 0;
+  text-decoration: none;
+  cursor: pointer;
+  padding: $size-16;
+  background: $red-400;
+  color: $neutral-100;
+  border-radius: 100vw;
+  @extend %shadow;
+  @include interactive-scale($neutral-100, $red-500);
 }

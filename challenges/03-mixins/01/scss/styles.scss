@@ -1,6 +1,35 @@
+@mixin linear-gradient($deg, $clr-1,$clr-2){
+  background: linear-gradient($deg, $clr-1, $clr-2);
+}
+
+@mixin ui-element($size,$color,$bg-color,$hover-color,$hover-bg-color,){
+  padding: $size calc($size * 3);
+  background-color: $bg-color;
+  color: $color;
+  &:hover{
+    color: $hover-color;
+    background-color: $hover-bg-color;
+  }
+}
+
+@mixin pseudo-underline($width,$height,$clr-1,$margin){
+  width: $width;
+  height: $height;
+  background-color: $clr-1;
+  margin: $margin auto;
+  content: '';
+  display: block;
+}
+
 body {
   font-family: system-ui;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.title::after{
+  @include pseudo-underline(8em, 1px, #fff, 2em);
 }
 
 .section-one,
@@ -8,4 +37,25 @@ body {
 .section-three {
   text-align: center;
   padding: 10vh 0;
+}
+
+.section-one{
+  @include linear-gradient(45deg, #03b412, #027a0c);
+}
+.section-two{
+  @include linear-gradient(45deg, #eb54ff, #470050);
+}
+.section-three{
+  @include linear-gradient(90deg, #17F0F0, #0e6868);
+}
+
+.button-one{
+  @include ui-element(1rem,white, black, black, white);
+}
+.button-two{
+  @include ui-element(1rem,white, black, black, white);
+}
+.badge-one, .badge-two{
+    @include ui-element(1rem,white, black, black, white);
+    display: inline-block;
 }
